@@ -8,7 +8,7 @@ interface CollisionSimulationProps {
   onStatsUpdate: (stats: Stats) => void;
 }
 
-const MOLECULE_RADIUS = 3;
+const MOLECULE_RADIUS = 1.5;
 const MAX_INITIAL_VELOCITY = 1;
 
 const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps) => {
