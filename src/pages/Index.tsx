@@ -1,12 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from 'react';
+import CollisionSimulation from '@/components/CollisionSimulation';
+import Controls from '@/components/Controls';
+import StatsDisplay from '@/components/StatsDisplay';
+import { SimulationParams, Stats } from '@/lib/types';
+
+const INITIAL_PARAMS: SimulationParams = {
+  mass1: 5,
+  count1: 50,
+  mass2: 15,
+  count2: 25,
+};
 
 const Index = () => {
+  const [simulationKey, setSimulationKey] = useState(1);
+  const [params, setParams] = useState<SimulationParams>(INITIAL_PARAMS);
+  const [stats, setStats] = useState<Stats>({ meanKE1: 0, meanKE2: 0 });
+  
+  const handleStartSimulation = (newParams: SimulationParams) => {
+    setParams(newParams);
+    setSimulationKey(prev => prev + 1); // Remounts the simulation component
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="flex h-screen bg-background text-foreground">
+      <aside className="w-80 flex-shrink-0 bg-card p-6 overflow-y-auto space-y-6 border-r border-border">
+        <h1 className="text-2xl font-bold">Molecule Collision Sim</h1>
+        <Controls onStart={handleStartSimulation} initialParams={params} />
+        <StatsDisplay stats={stats} />
+      </aside>
+      <main className="flex-1 relative">
+        <CollisionSimulation
+          key={simulationKey}
+          params={params}
+          onStatsUpdate={setStats}
+        />
+      </main>
     </div>
   );
 };
