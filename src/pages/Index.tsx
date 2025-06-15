@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import CollisionSimulation from '@/components/CollisionSimulation';
 import Controls from '@/components/Controls';
@@ -26,18 +25,12 @@ const Index = () => {
     <div className="flex h-screen bg-background text-foreground">
       <aside className="w-80 flex-shrink-0 bg-card p-6 overflow-y-auto space-y-6 border-r border-border">
         <h1 className="text-lg font-bold">Molecule Collision Simulator</h1>
-        <div className="text-sm text-muted-foreground space-y-2">
+        <div className="text-sm text-muted-foreground space-y-2 text-justify">
           <p>
-            This is a simulation of two monoatomic gases in a 2D box. The molecules start at random positions with random velocities.
-          </p>
-          <p>
-            Because of the difference in molecular masses, the two gases start with different mean kinetic energies.
+            This is a simulation of two monoatomic gases in a 2D box. The two gases start with different mean kinetic energies.
           </p>
           <p>
             The simulation shows that the mean kinetic energies for the two gases tend to approach each other with time.
-          </p>
-          <p>
-            This demonstrates the equipartition theorem and one form of the second law of thermodynamics (that a mixture of gases achieves a uniform temperature - which is same as uniform mean kinetic energy).
           </p>
         </div>
         <Controls onStart={handleStartSimulation} initialParams={params} />
