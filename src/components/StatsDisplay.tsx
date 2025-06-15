@@ -14,7 +14,7 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <h3 className="text-lg font-medium text-cyan-400">
+          <h3 className="text-base font-medium text-cyan-400">
             Mean Kinetic Energy (Gas 1)
           </h3>
           <p className="text-2xl font-semibold">
@@ -22,7 +22,7 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
           </p>
         </div>
         <div>
-          <h3 className="text-lg font-medium text-fuchsia-400">
+          <h3 className="text-base font-medium text-fuchsia-400">
             Mean Kinetic Energy (Gas 2)
           </h3>
           <p className="text-2xl font-semibold">
