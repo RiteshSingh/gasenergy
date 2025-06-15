@@ -25,7 +25,7 @@ const Index = () => {
   return (
     <div className="flex h-screen bg-background text-foreground">
       <aside className="w-80 flex-shrink-0 bg-card p-6 overflow-y-auto space-y-6 border-r border-border">
-        <h1 className="text-2xl font-bold">Molecule Collision Sim</h1>
+        <h1 className="text-xl font-bold">Molecule Collision Simulator</h1>
         <Controls onStart={handleStartSimulation} initialParams={params} />
         <StatsDisplay stats={stats} />
       </aside>
