@@ -150,7 +150,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
       }
     };
     
-    const calculateStats = () => {
+    const calculateStats = (collisionStats: { approachingPerSec: number; separatingPerSec: number }) => {
         let totalKE1 = 0, count1 = 0;
         let totalKE2 = 0, count2 = 0;
 
@@ -167,6 +167,8 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
         onStatsUpdate({
             meanKE1: count1 > 0 ? totalKE1 / count1 : 0,
             meanKE2: count2 > 0 ? totalKE2 / count2 : 0,
+            approachingCollisionsPerSec: collisionStats.approachingPerSec,
+            separatingCollisionsPerSec: collisionStats.separatingPerSec,
         });
     }
 

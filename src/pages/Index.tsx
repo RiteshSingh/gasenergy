@@ -14,7 +14,7 @@ const INITIAL_PARAMS: SimulationParams = {
 const Index = () => {
   const [simulationKey, setSimulationKey] = useState(1);
   const [params, setParams] = useState<SimulationParams>(INITIAL_PARAMS);
-  const [stats, setStats] = useState<Stats>({ meanKE1: 0, meanKE2: 0 });
+  const [stats, setStats] = useState<Stats>({ meanKE1: 0, meanKE2: 0, approachingCollisionsPerSec: 0, separatingCollisionsPerSec: 0 });
   
   const handleStartSimulation = (newParams: SimulationParams) => {
     setParams(newParams);
