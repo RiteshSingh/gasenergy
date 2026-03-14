@@ -171,9 +171,9 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     }
 
     const gameLoop = () => {
-      update();
+      const collisionStats = update();
       draw();
-      calculateStats();
+      calculateStats(collisionStats);
       animationFrameId.current = requestAnimationFrame(gameLoop);
     };
 
