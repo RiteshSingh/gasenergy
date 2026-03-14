@@ -29,6 +29,22 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
             {stats.meanKE2.toFixed(2)}
           </p>
         </div>
+        <div>
+          <h3 className="text-base font-medium text-green-400">
+            Approaching Collisions/sec
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.approachingCollisionsPerSec.toFixed(1)}
+          </p>
+        </div>
+        <div>
+          <h3 className="text-base font-medium text-orange-400">
+            Separating Collisions/sec
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.separatingCollisionsPerSec.toFixed(1)}
+          </p>
+        </div>
       </CardContent>
     </Card>
   );

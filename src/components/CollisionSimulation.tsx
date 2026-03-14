@@ -55,9 +55,24 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     createMolecules(params.count1, params.mass1, 1, 'rgb(34 211 238)'); // cyan-400
     createMolecules(params.count2, params.mass2, 2, 'rgb(217 70 239)'); // fuchsia-500
 
+    let approachingCount = 0;
+    let separatingCount = 0;
+    let lastCountReset = performance.now();
+    let approachingPerSec = 0;
+    let separatingPerSec = 0;
+
     const update = () => {
       const molecules = moleculesRef.current;
-      
+      const now = performance.now();
+      const elapsed = (now - lastCountReset) / 1000;
+      if (elapsed >= 1) {
+        approachingPerSec = approachingCount / elapsed;
+        separatingPerSec = separatingCount / elapsed;
+        approachingCount = 0;
+        separatingCount = 0;
+        lastCountReset = now;
+      }
+
       // Update positions and handle wall collisions
       for (const m of molecules) {
         m.x += m.vx;
@@ -79,9 +94,19 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
 
           if (dist < m1.radius + m2.radius) {
             const normal = Vec.normalize(distVec);
-            const tangent = { x: -normal.y, y: normal.x };
             const v1 = { x: m1.vx, y: m1.vy };
             const v2 = { x: m2.vx, y: m2.vy };
+            const relativeVelocity = Vec.subtract(v1, v2);
+            const approachSpeed = Vec.dot(relativeVelocity, normal);
+
+            // approachSpeed > 0 means approaching, < 0 means separating
+            if (approachSpeed > 0) {
+              approachingCount++;
+            } else {
+              separatingCount++;
+            }
+
+            const tangent = { x: -normal.y, y: normal.x };
 
             const v1n_scalar = Vec.dot(v1, normal);
             const v1t_scalar = Vec.dot(v1, tangent);
@@ -111,6 +136,8 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
           }
         }
       }
+
+      return { approachingPerSec, separatingPerSec };
     };
 
     const draw = () => {
@@ -123,7 +150,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
       }
     };
     
-    const calculateStats = () => {
+    const calculateStats = (collisionStats: { approachingPerSec: number; separatingPerSec: number }) => {
         let totalKE1 = 0, count1 = 0;
         let totalKE2 = 0, count2 = 0;
 
@@ -140,13 +167,15 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
         onStatsUpdate({
             meanKE1: count1 > 0 ? totalKE1 / count1 : 0,
             meanKE2: count2 > 0 ? totalKE2 / count2 : 0,
+            approachingCollisionsPerSec: collisionStats.approachingPerSec,
+            separatingCollisionsPerSec: collisionStats.separatingPerSec,
         });
     }
 
     const gameLoop = () => {
-      update();
+      const collisionStats = update();
       draw();
-      calculateStats();
+      calculateStats(collisionStats);
       animationFrameId.current = requestAnimationFrame(gameLoop);
     };
 
