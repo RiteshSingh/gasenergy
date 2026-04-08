@@ -40,6 +40,12 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     const width = parent.clientWidth;
     const height = parent.clientHeight;
 
+    oppositeCountRef.current = 0;
+    sameCountRef.current = 0;
+    lastTimeRef.current = performance.now();
+    oppositeRateRef.current = 0;
+    sameRateRef.current = 0;
+
     // Initialize molecules
     moleculesRef.current = [];
     const createMolecules = (count: number, mass: number, type: 1 | 2, color: string) => {
@@ -83,6 +89,9 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
           const dist = Vec.magnitude(distVec);
 
           if (dist < m1.radius + m2.radius) {
+            // Classify collision: dot product of velocities along collision axis
+            const v1 = { x: m1.vx, y: m1.vy };
+            const v2 = { x: m2.vx, y: m2.vy };
             const normal = Vec.normalize(distVec);
             const tangent = { x: -normal.y, y: normal.x };
             const v1 = { x: m1.vx, y: m1.vy };
