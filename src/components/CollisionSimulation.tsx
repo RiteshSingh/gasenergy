@@ -155,9 +155,22 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
                 count2++;
             }
         }
+
+        const now = performance.now();
+        const elapsed = (now - lastTimeRef.current) / 1000;
+        if (elapsed >= 1) {
+            oppositeRateRef.current = oppositeCountRef.current / elapsed;
+            sameRateRef.current = sameCountRef.current / elapsed;
+            oppositeCountRef.current = 0;
+            sameCountRef.current = 0;
+            lastTimeRef.current = now;
+        }
+
         onStatsUpdate({
             meanKE1: count1 > 0 ? totalKE1 / count1 : 0,
             meanKE2: count2 > 0 ? totalKE2 / count2 : 0,
+            oppositeCollisionsPerSec: oppositeRateRef.current,
+            sameCollisionsPerSec: sameRateRef.current,
         });
     }
 
