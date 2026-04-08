@@ -89,13 +89,19 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
           const dist = Vec.magnitude(distVec);
 
           if (dist < m1.radius + m2.radius) {
-            // Classify collision: dot product of velocities along collision axis
-            const v1 = { x: m1.vx, y: m1.vy };
-            const v2 = { x: m2.vx, y: m2.vy };
             const normal = Vec.normalize(distVec);
             const tangent = { x: -normal.y, y: normal.x };
             const v1 = { x: m1.vx, y: m1.vy };
             const v2 = { x: m2.vx, y: m2.vy };
+
+            // Classify: axial velocity components along collision normal
+            const v1n_scalar = Vec.dot(v1, normal);
+            const v2n_scalar = Vec.dot(v2, normal);
+            if (v1n_scalar * v2n_scalar < 0) {
+              oppositeCountRef.current++;
+            } else {
+              sameCountRef.current++;
+            }
 
             const v1n_scalar = Vec.dot(v1, normal);
             const v1t_scalar = Vec.dot(v1, tangent);
