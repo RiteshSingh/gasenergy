@@ -14,19 +14,35 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <h3 className="text-base font-medium text-cyan-400">
-            Mean Kinetic Energy (Gas 1)
+          <h3 className="text-xs font-medium text-cyan-400">
+            Mean KE (Gas 1)
           </h3>
           <p className="text-2xl font-semibold">
             {stats.meanKE1.toFixed(2)}
           </p>
         </div>
         <div>
-          <h3 className="text-base font-medium text-fuchsia-400">
-            Mean Kinetic Energy (Gas 2)
+          <h3 className="text-xs font-medium text-fuchsia-400">
+            Mean KE (Gas 2)
           </h3>
           <p className="text-2xl font-semibold">
             {stats.meanKE2.toFixed(2)}
+          </p>
+        </div>
+        <div>
+          <h3 className="text-xs font-medium text-orange-400">
+            Opposite-dir collisions/s
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.oppositeCollisionsPerSec.toFixed(0)}
+          </p>
+        </div>
+        <div>
+          <h3 className="text-xs font-medium text-green-400">
+            Same-dir collisions/s
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.sameCollisionsPerSec.toFixed(0)}
           </p>
         </div>
       </CardContent>

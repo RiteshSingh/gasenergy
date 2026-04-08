@@ -15,6 +15,11 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const moleculesRef = useRef<Molecule[]>([]);
   const animationFrameId = useRef<number>();
+  const oppositeCountRef = useRef(0);
+  const sameCountRef = useRef(0);
+  const lastTimeRef = useRef(performance.now());
+  const oppositeRateRef = useRef(0);
+  const sameRateRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,6 +39,12 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     canvas.style.height = `${parent.clientHeight}px`;
     const width = parent.clientWidth;
     const height = parent.clientHeight;
+
+    oppositeCountRef.current = 0;
+    sameCountRef.current = 0;
+    lastTimeRef.current = performance.now();
+    oppositeRateRef.current = 0;
+    sameRateRef.current = 0;
 
     // Initialize molecules
     moleculesRef.current = [];
@@ -83,9 +94,16 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             const v1 = { x: m1.vx, y: m1.vy };
             const v2 = { x: m2.vx, y: m2.vy };
 
+            // Classify: axial velocity components along collision normal
             const v1n_scalar = Vec.dot(v1, normal);
-            const v1t_scalar = Vec.dot(v1, tangent);
             const v2n_scalar = Vec.dot(v2, normal);
+            if (v1n_scalar * v2n_scalar < 0) {
+              oppositeCountRef.current++;
+            } else {
+              sameCountRef.current++;
+            }
+
+            const v1t_scalar = Vec.dot(v1, tangent);
             const v2t_scalar = Vec.dot(v2, tangent);
             
             const v1n_scalar_final = (v1n_scalar * (m1.mass - m2.mass) + 2 * m2.mass * v2n_scalar) / (m1.mass + m2.mass);
@@ -137,9 +155,22 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
                 count2++;
             }
         }
+
+        const now = performance.now();
+        const elapsed = (now - lastTimeRef.current) / 1000;
+        if (elapsed >= 1) {
+            oppositeRateRef.current = oppositeCountRef.current / elapsed;
+            sameRateRef.current = sameCountRef.current / elapsed;
+            oppositeCountRef.current = 0;
+            sameCountRef.current = 0;
+            lastTimeRef.current = now;
+        }
+
         onStatsUpdate({
             meanKE1: count1 > 0 ? totalKE1 / count1 : 0,
             meanKE2: count2 > 0 ? totalKE2 / count2 : 0,
+            oppositeCollisionsPerSec: oppositeRateRef.current,
+            sameCollisionsPerSec: sameRateRef.current,
         });
     }
 

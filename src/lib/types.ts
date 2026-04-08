@@ -14,6 +14,8 @@ export interface Molecule {
 export interface Stats {
   meanKE1: number;
   meanKE2: number;
+  oppositeCollisionsPerSec: number;
+  sameCollisionsPerSec: number;
 }
 
 export interface SimulationParams {
