@@ -15,6 +15,11 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const moleculesRef = useRef<Molecule[]>([]);
   const animationFrameId = useRef<number>();
+  const oppositeCountRef = useRef(0);
+  const sameCountRef = useRef(0);
+  const lastTimeRef = useRef(performance.now());
+  const oppositeRateRef = useRef(0);
+  const sameRateRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
