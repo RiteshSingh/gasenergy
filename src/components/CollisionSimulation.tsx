@@ -103,9 +103,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
               sameCountRef.current++;
             }
 
-            const v1n_scalar = Vec.dot(v1, normal);
             const v1t_scalar = Vec.dot(v1, tangent);
-            const v2n_scalar = Vec.dot(v2, normal);
             const v2t_scalar = Vec.dot(v2, tangent);
             
             const v1n_scalar_final = (v1n_scalar * (m1.mass - m2.mass) + 2 * m2.mass * v2n_scalar) / (m1.mass + m2.mass);
