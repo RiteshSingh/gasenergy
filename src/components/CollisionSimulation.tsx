@@ -48,23 +48,28 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
 
     // Initialize molecules
     moleculesRef.current = [];
-    const createMolecules = (count: number, mass: number, type: 1 | 2, color: string) => {
+    const speed1 = MAX_INITIAL_VELOCITY;
+    // KE1 = 0.5 * m1 * speed1^2 = KE2 = 0.5 * m2 * speed2^2
+    const speed2 = speed1 * Math.sqrt(params.mass1 / params.mass2);
+
+    const createMolecules = (count: number, mass: number, speed: number, type: 1 | 2, color: string) => {
       for (let i = 0; i < count; i++) {
+        const angle = Math.random() * 2 * Math.PI;
         moleculesRef.current.push({
           id: `${type}-${i}`,
           type,
           x: MOLECULE_RADIUS + Math.random() * (width - 2 * MOLECULE_RADIUS),
           y: MOLECULE_RADIUS + Math.random() * (height - 2 * MOLECULE_RADIUS),
-          vx: (Math.random() - 0.5) * 2 * MAX_INITIAL_VELOCITY,
-          vy: (Math.random() - 0.5) * 2 * MAX_INITIAL_VELOCITY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
           mass,
           radius: MOLECULE_RADIUS,
           color,
         });
       }
     };
-    createMolecules(params.count1, params.mass1, 1, 'rgb(34 211 238)'); // cyan-400
-    createMolecules(params.count2, params.mass2, 2, 'rgb(217 70 239)'); // fuchsia-500
+    createMolecules(params.count1, params.mass1, speed1, 1, 'rgb(34 211 238)');
+    createMolecules(params.count2, params.mass2, speed2, 2, 'rgb(217 70 239)');
 
     const update = () => {
       const molecules = moleculesRef.current;
