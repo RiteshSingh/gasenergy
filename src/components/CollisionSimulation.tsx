@@ -97,10 +97,12 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             // Classify: axial velocity components along collision normal
             const v1n_scalar = Vec.dot(v1, normal);
             const v2n_scalar = Vec.dot(v2, normal);
-            if (v1n_scalar * v2n_scalar < 0) {
-              oppositeCountRef.current++;
-            } else {
-              sameCountRef.current++;
+            if (m1.type !== m2.type) {
+              if (v1n_scalar * v2n_scalar < 0) {
+                oppositeCountRef.current++;
+              } else {
+                sameCountRef.current++;
+              }
             }
 
             const v1t_scalar = Vec.dot(v1, tangent);
