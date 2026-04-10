@@ -22,11 +22,27 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
           </p>
         </div>
         <div>
+          <h3 className="text-xs font-medium text-cyan-400">
+            Time-Avg KE (Gas 1)
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.timeAvgKE1.toFixed(2)}
+          </p>
+        </div>
+        <div>
           <h3 className="text-xs font-medium text-fuchsia-400">
             Mean KE (Gas 2)
           </h3>
           <p className="text-2xl font-semibold">
             {stats.meanKE2.toFixed(2)}
+          </p>
+        </div>
+        <div>
+          <h3 className="text-xs font-medium text-fuchsia-400">
+            Time-Avg KE (Gas 2)
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.timeAvgKE2.toFixed(2)}
           </p>
         </div>
         <div>
