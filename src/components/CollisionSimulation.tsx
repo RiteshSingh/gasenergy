@@ -20,6 +20,9 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const lastTimeRef = useRef(performance.now());
   const oppositeRateRef = useRef(0);
   const sameRateRef = useRef(0);
+  const frameSumKE1 = useRef(0);
+  const frameSumKE2 = useRef(0);
+  const frameCountRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -45,6 +48,9 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     lastTimeRef.current = performance.now();
     oppositeRateRef.current = 0;
     sameRateRef.current = 0;
+    frameSumKE1.current = 0;
+    frameSumKE2.current = 0;
+    frameCountRef.current = 0;
 
     // Initialize molecules
     moleculesRef.current = [];
