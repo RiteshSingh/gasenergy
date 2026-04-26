@@ -195,6 +195,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             timeAvgKE2: frameSumKE2.current / frameCountRef.current,
             oppositeCollisionsPerSec: oppositeRateRef.current,
             sameCollisionsPerSec: sameRateRef.current,
+            elapsedSeconds: (now - startTimeRef.current) / 1000,
         });
     }
 
