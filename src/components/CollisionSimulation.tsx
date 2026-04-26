@@ -54,30 +54,42 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     frameSumKE2.current = 0;
     frameCountRef.current = 0;
 
-    // Initialize molecules
+    // Initialize molecules with random speeds, then rescale so mean KE per gas
+    // matches a common target KE.
     moleculesRef.current = [];
-    const speed1 = MAX_INITIAL_VELOCITY;
-    // KE1 = 0.5 * m1 * speed1^2 = KE2 = 0.5 * m2 * speed2^2
-    const speed2 = speed1 * Math.sqrt(params.mass1 / params.mass2);
+    const targetKE = 0.5 * params.mass1 * MAX_INITIAL_VELOCITY * MAX_INITIAL_VELOCITY;
 
-    const createMolecules = (count: number, mass: number, speed: number, type: 1 | 2, color: string) => {
+    const createMolecules = (count: number, mass: number, type: 1 | 2, color: string) => {
+      const start = moleculesRef.current.length;
+      let sumKE = 0;
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 2 * MAX_INITIAL_VELOCITY;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        sumKE += 0.5 * mass * (vx * vx + vy * vy);
         moleculesRef.current.push({
           id: `${type}-${i}`,
           type,
           x: MOLECULE_RADIUS + Math.random() * (width - 2 * MOLECULE_RADIUS),
           y: MOLECULE_RADIUS + Math.random() * (height - 2 * MOLECULE_RADIUS),
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
+          vx,
+          vy,
           mass,
           radius: MOLECULE_RADIUS,
           color,
         });
       }
+      // Rescale velocities so mean KE equals targetKE exactly
+      const meanKE = count > 0 ? sumKE / count : 0;
+      const scale = meanKE > 0 ? Math.sqrt(targetKE / meanKE) : 1;
+      for (let i = start; i < moleculesRef.current.length; i++) {
+        moleculesRef.current[i].vx *= scale;
+        moleculesRef.current[i].vy *= scale;
+      }
     };
-    createMolecules(params.count1, params.mass1, speed1, 1, 'rgb(34 211 238)');
-    createMolecules(params.count2, params.mass2, speed2, 2, 'rgb(217 70 239)');
+    createMolecules(params.count1, params.mass1, 1, 'rgb(34 211 238)');
+    createMolecules(params.count2, params.mass2, 2, 'rgb(217 70 239)');
 
     const update = () => {
       const molecules = moleculesRef.current;
