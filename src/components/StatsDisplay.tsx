@@ -14,6 +14,14 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
+          <h3 className="text-xs font-medium text-muted-foreground">
+            Elapsed time (s)
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.elapsedSeconds.toFixed(1)}
+          </p>
+        </div>
+        <div>
           <h3 className="text-xs font-medium text-cyan-400">
             Mean KE (Gas 1)
           </h3>
