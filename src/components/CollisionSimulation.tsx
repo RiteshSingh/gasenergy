@@ -18,6 +18,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const oppositeCountRef = useRef(0);
   const sameCountRef = useRef(0);
   const lastTimeRef = useRef(performance.now());
+  const startTimeRef = useRef(performance.now());
   const oppositeRateRef = useRef(0);
   const sameRateRef = useRef(0);
   const frameSumKE1 = useRef(0);
