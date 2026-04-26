@@ -18,6 +18,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const oppositeCountRef = useRef(0);
   const sameCountRef = useRef(0);
   const lastTimeRef = useRef(performance.now());
+  const startTimeRef = useRef(performance.now());
   const oppositeRateRef = useRef(0);
   const sameRateRef = useRef(0);
   const frameSumKE1 = useRef(0);
@@ -46,6 +47,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     oppositeCountRef.current = 0;
     sameCountRef.current = 0;
     lastTimeRef.current = performance.now();
+    startTimeRef.current = performance.now();
     oppositeRateRef.current = 0;
     sameRateRef.current = 0;
     frameSumKE1.current = 0;
@@ -193,6 +195,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             timeAvgKE2: frameSumKE2.current / frameCountRef.current,
             oppositeCollisionsPerSec: oppositeRateRef.current,
             sameCollisionsPerSec: sameRateRef.current,
+            elapsedSeconds: (now - startTimeRef.current) / 1000,
         });
     }
 

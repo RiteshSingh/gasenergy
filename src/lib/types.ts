@@ -18,6 +18,7 @@ export interface Stats {
   timeAvgKE2: number;
   oppositeCollisionsPerSec: number;
   sameCollisionsPerSec: number;
+  elapsedSeconds: number;
 }
 
 export interface SimulationParams {
