@@ -21,9 +21,13 @@ export interface Stats {
   elapsedSeconds: number;
 }
 
+export type SimulationMode = 'many' | 'two';
+
 export interface SimulationParams {
+  mode: SimulationMode;
   mass1: number;
   count1: number;
   mass2: number;
   count2: number;
+  radius: number;
 }

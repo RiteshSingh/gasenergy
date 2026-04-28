@@ -8,7 +8,6 @@ interface CollisionSimulationProps {
   onStatsUpdate: (stats: Stats) => void;
 }
 
-const MOLECULE_RADIUS = 1.5;
 const MAX_INITIAL_VELOCITY = 1;
 
 const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps) => {
@@ -71,12 +70,12 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
         moleculesRef.current.push({
           id: `${type}-${i}`,
           type,
-          x: MOLECULE_RADIUS + Math.random() * (width - 2 * MOLECULE_RADIUS),
-          y: MOLECULE_RADIUS + Math.random() * (height - 2 * MOLECULE_RADIUS),
+          x: params.radius + Math.random() * (width - 2 * params.radius),
+          y: params.radius + Math.random() * (height - 2 * params.radius),
           vx,
           vy,
           mass,
-          radius: MOLECULE_RADIUS,
+          radius: params.radius,
           color,
         });
       }
