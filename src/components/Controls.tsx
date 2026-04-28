@@ -49,6 +49,11 @@ const Controls = ({ onStart, initialParams }: ControlsProps) => {
         </div>
 
         <div className="space-y-3">
+          <Label htmlFor="meanKE">Mean Kinetic Energy (both gases) = {params.meanKE}</Label>
+          <Slider id="meanKE" min={0.5} max={20} step={0.5} value={[params.meanKE]} onValueChange={([v]) => handleSliderChange('meanKE', v)} />
+        </div>
+
+        <div className="space-y-3">
           <Label htmlFor="mass1" className="text-cyan-400">Mass (Gas 1) = {params.mass1}</Label>
           <Slider id="mass1" min={1} max={20} step={1} value={[params.mass1]} onValueChange={([v]) => handleSliderChange('mass1', v)} />
         </div>

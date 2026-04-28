@@ -30,4 +30,5 @@ export interface SimulationParams {
   mass2: number;
   count2: number;
   radius: number;
+  meanKE: number;
 }
