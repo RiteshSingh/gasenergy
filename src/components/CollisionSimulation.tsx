@@ -47,6 +47,8 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
 
     oppositeCountRef.current = 0;
     sameCountRef.current = 0;
+    oppositeTotalRef.current = 0;
+    sameTotalRef.current = 0;
     lastTimeRef.current = performance.now();
     startTimeRef.current = performance.now();
     oppositeRateRef.current = 0;

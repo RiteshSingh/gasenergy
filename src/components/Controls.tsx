@@ -76,7 +76,7 @@ const Controls = ({ onStart, initialParams }: ControlsProps) => {
         {isTwo && (
           <div className="space-y-3">
             <Label htmlFor="radius">Radius (both molecules) = {params.radius}</Label>
-            <Slider id="radius" min={5} max={80} step={1} value={[params.radius]} onValueChange={([v]) => handleSliderChange('radius', v)} />
+            <Slider id="radius" min={5} max={400} step={1} value={[params.radius]} onValueChange={([v]) => handleSliderChange('radius', v)} />
           </div>
         )}
         <Button onClick={() => onStart(params)} className="w-full">
