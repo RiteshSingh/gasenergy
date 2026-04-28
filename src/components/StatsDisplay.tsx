@@ -69,6 +69,22 @@ const StatsDisplay = ({ stats }: StatsDisplayProps) => {
             {stats.sameCollisionsPerSec.toFixed(0)}
           </p>
         </div>
+        <div>
+          <h3 className="text-xs font-medium text-orange-400">
+            Total opposite-dir collisions
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.oppositeCollisionsTotal.toLocaleString()}
+          </p>
+        </div>
+        <div>
+          <h3 className="text-xs font-medium text-green-400">
+            Total same-dir collisions
+          </h3>
+          <p className="text-2xl font-semibold">
+            {stats.sameCollisionsTotal.toLocaleString()}
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
