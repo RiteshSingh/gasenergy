@@ -5,10 +5,12 @@ import StatsDisplay from '@/components/StatsDisplay';
 import { SimulationParams, Stats } from '@/lib/types';
 
 const INITIAL_PARAMS: SimulationParams = {
+  mode: 'many',
   mass1: 5,
   count1: 50,
   mass2: 15,
   count2: 25,
+  radius: 1.5,
 };
 
 const Index = () => {
