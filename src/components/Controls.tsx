@@ -50,7 +50,7 @@ const Controls = ({ onStart, initialParams }: ControlsProps) => {
 
         <div className="space-y-3">
           <Label htmlFor="meanKE">Mean Kinetic Energy (both gases) = {params.meanKE}</Label>
-          <Slider id="meanKE" min={0.5} max={20} step={0.5} value={[params.meanKE]} onValueChange={([v]) => handleSliderChange('meanKE', v)} />
+          <Slider id="meanKE" min={0.5} max={1000} step={0.5} value={[params.meanKE]} onValueChange={([v]) => handleSliderChange('meanKE', v)} />
         </div>
 
         <div className="space-y-3">
