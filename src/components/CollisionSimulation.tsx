@@ -16,6 +16,8 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
   const animationFrameId = useRef<number>();
   const oppositeCountRef = useRef(0);
   const sameCountRef = useRef(0);
+  const oppositeTotalRef = useRef(0);
+  const sameTotalRef = useRef(0);
   const lastTimeRef = useRef(performance.now());
   const startTimeRef = useRef(performance.now());
   const oppositeRateRef = useRef(0);
@@ -124,8 +126,10 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             if (m1.type !== m2.type) {
               if (v1n_scalar * v2n_scalar < 0) {
                 oppositeCountRef.current++;
+                oppositeTotalRef.current++;
               } else {
                 sameCountRef.current++;
+                sameTotalRef.current++;
               }
             }
 
@@ -206,6 +210,8 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
             timeAvgKE2: frameSumKE2.current / frameCountRef.current,
             oppositeCollisionsPerSec: oppositeRateRef.current,
             sameCollisionsPerSec: sameRateRef.current,
+            oppositeCollisionsTotal: oppositeTotalRef.current,
+            sameCollisionsTotal: sameTotalRef.current,
             elapsedSeconds: (now - startTimeRef.current) / 1000,
         });
     }
