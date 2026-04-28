@@ -11,6 +11,7 @@ const INITIAL_PARAMS: SimulationParams = {
   mass2: 15,
   count2: 25,
   radius: 1.5,
+  meanKE: 2.5,
 };
 
 const Index = () => {

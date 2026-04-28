@@ -56,7 +56,7 @@ const CollisionSimulation = ({ params, onStatsUpdate }: CollisionSimulationProps
     // Initialize molecules with random speeds, then rescale so mean KE per gas
     // matches a common target KE.
     moleculesRef.current = [];
-    const targetKE = 0.5 * params.mass1 * MAX_INITIAL_VELOCITY * MAX_INITIAL_VELOCITY;
+    const targetKE = params.meanKE;
 
     const createMolecules = (count: number, mass: number, type: 1 | 2, color: string) => {
       const start = moleculesRef.current.length;
